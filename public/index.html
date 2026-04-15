@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caption Craft</title>
+    <meta
+      name="description"
+      content="Upload an image and generate a polished caption with a beautifully designed interface."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/styles.css?v=9" />
+  </head>
+  <body class="theme-dark">
+    <div class="background-orbs">
+      <span class="orb orb-one"></span>
+      <span class="orb orb-two"></span>
+      <span class="orb orb-three"></span>
+    </div>
+
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-mark"><i class="fa-solid fa-sparkles"></i></span>
+            <div>
+              <p class="brand-name">Caption Craft</p>
+              <p class="brand-tag">AI Image Caption Generator</p>
+            </div>
+          </div>
+          <div class="top-actions">
+            <span class="pill"><i class="fa-solid fa-wand-magic-sparkles"></i> AI-ready studio</span>
+            <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+              <i class="fa-solid fa-moon"></i>
+              <span>Dark</span>
+            </button>
+          </div>
+        </nav>
+
+        <section class="hero-copy">
+          <p class="eyebrow">Image to caption</p>
+          <h1>Generate premium captions that look ready for production.</h1>
+          <p class="lede">
+            Upload an image, choose a style, and get a polished caption with a modern UI designed for
+            real-world demos and products.
+          </p>
+          <div class="quick-actions">
+            <button class="ghost-btn sample-btn" id="sampleImageBtn" type="button" data-sample="camera">
+              <i class="fa-regular fa-image"></i> Try Sample Images
+            </button>
+            <button class="ghost-btn sample-btn" id="quickDemoBtn" type="button" data-sample="demo">
+              <i class="fa-solid fa-bolt"></i> Quick Demo
+            </button>
+          </div>
+        </section>
+      </header>
+
+      <main class="workspace">
+        <section class="card upload-card">
+          <div class="section-heading">
+            <p class="section-label">Upload</p>
+            <h2>Drop an image or browse</h2>
+          </div>
+
+          <label class="upload-zone" for="imageInput" id="uploadZone">
+            <input id="imageInput" type="file" accept="image/*" hidden />
+            <span class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+            <strong>Drag & drop or click to upload</strong>
+            <span>PNG, JPG, or WEBP. Preview appears instantly.</span>
+          </label>
+
+          <div class="preview-frame" id="previewFrame" aria-live="polite">
+            <button class="remove-image" id="removeImageBtn" type="button" aria-label="Remove image">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="preview-empty">
+              <p>No image selected yet</p>
+              <span>Your uploaded image will appear here.</span>
+            </div>
+            <img id="previewImage" alt="Uploaded preview" />
+          </div>
+        </section>
+
+        <section class="card result-card">
+          <div class="section-heading">
+            <p class="section-label">Caption</p>
+            <h2>Generated result</h2>
+          </div>
+
+          <div class="style-picker" aria-label="Caption style">
+            <button class="style-chip is-selected" type="button" data-style="professional">
+              <i class="fa-solid fa-briefcase"></i> Professional
+            </button>
+            <button class="style-chip" type="button" data-style="storytelling">
+              <i class="fa-solid fa-book-open"></i> Storytelling
+            </button>
+            <button class="style-chip" type="button" data-style="minimal">
+              <i class="fa-solid fa-minus"></i> Minimal
+            </button>
+            <button class="style-chip" type="button" data-style="instagram">
+              <i class="fa-brands fa-instagram"></i> Instagram
+            </button>
+            <span class="active-indicator" aria-hidden="true"></span>
+          </div>
+          <div class="count-picker" aria-label="Caption count">
+            <span class="count-label">Captions</span>
+            <button class="count-chip is-selected" type="button" data-count="1">1</button>
+            <button class="count-chip" type="button" data-count="3">3</button>
+            <button class="count-chip" type="button" data-count="5">5</button>
+          </div>
+
+          <div class="caption-panel">
+            <div class="caption-header">
+              <i class="fa-solid fa-quote-left"></i>
+              <p class="caption-text" id="captionText">
+                Upload an image to generate a caption that matches what is actually in the photo.
+              </p>
+            </div>
+            <div class="tag-row">
+              <span class="tag">Dog</span>
+              <span class="tag">Outdoor</span>
+              <span class="tag">Daytime</span>
+            </div>
+            <div class="confidence">
+              <span>Confidence</span>
+              <div class="confidence-bar">
+                <span class="confidence-fill"></span>
+              </div>
+            </div>
+            <div class="meta-row">
+              <span class="status" id="statusBadge">Waiting for upload</span>
+              <span class="source-tag" id="sourceTag">Checking AI status</span>
+              <span class="model-tag" id="modelTag">Model: checking</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary-btn" id="generateBtn" disabled>
+              <span class="btn-label">Generate Caption</span>
+              <span class="btn-spinner" aria-hidden="true"></span>
+            </button>
+            <button class="ghost-btn" id="copyBtn" disabled>
+              <i class="fa-regular fa-copy"></i> Copy Caption
+            </button>
+            <button class="ghost-btn regen-btn" type="button">
+              <i class="fa-solid fa-rotate-right"></i> Regenerate
+            </button>
+          </div>
+
+          <div class="loading-text" aria-hidden="true">
+            <span>Analyzing image...</span>
+            <span>Generating caption...</span>
+          </div>
+
+          <div class="caption-grid" id="captionGrid"></div>
+
+          <p class="setup-note" id="setupNote">
+            Real image-aware captions require an OpenAI API key in the server `.env` file. Local mode
+            uses a Python vision model.
+          </p>
+        </section>
+      </main>
+
+      <section class="highlights">
+        <article class="info-card">
+          <p class="section-label">Why this works</p>
+          <h3>Fast for demos</h3>
+          <p>Clean flow, professional layout, and everything stays functional with zero configuration.</p>
+        </article>
+        <article class="info-card">
+          <p class="section-label">UI approach</p>
+          <h3>Premium polish</h3>
+          <p>Glass panels, soft gradients, and micro-interactions make it feel production-ready.</p>
+        </article>
+        <article class="info-card">
+          <p class="section-label">Behavior</p>
+          <h3>Clear feedback</h3>
+          <p>Every state is visible, from uploads to AI mode, with modern status indicators.</p>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <p>Built for your AI Image Caption Generator project · UI refresh by Codex</p>
+      </footer>
+    </div>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <script src="/app.js?v=9" type="module"></script>
+  </body>
+</html>

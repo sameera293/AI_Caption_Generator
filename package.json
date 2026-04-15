@@ -1,0 +1,9 @@
+{
+  "name": "caption-craft",
+  "version": "1.0.0",
+  "description": "A stylish website that generates captions from uploaded images.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
